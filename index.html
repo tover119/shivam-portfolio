@@ -1,1 +1,53 @@
-<a href = https://tover119.github.io/other.html>CLICK HERE</a>
+<!DOCTYPE html>
+<html>
+    <style>
+    </style>
+    <head>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+    </head>
+
+    <body>
+        <a href = https://tover119.github.io/other.html>CLICK HERE</a>
+        <script>
+            var margin = {top: 100, bottom: 100, right: 100, left: 100};
+            var width = 1000, height = 1000;
+
+            //Screen translation coordinates
+            var x = d3.scaleLinear().range([0, width]);
+            var y = d3.scaleLinear().range([height, 0]);
+
+            //SVG
+            var svg = d3.select("body")
+                .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                    .attr("tansform", "translate(" + margin.left + "," + margin.top + ")");
+
+            //Read in the data
+            d3.csv("https://github.com/tover119/tover119.github.io/blob/master/master.csv", function(error, data) {
+                if (error) {
+                    return console.warn(error);
+                }
+
+                //Translate number values
+                data.forEach(function(d) {
+                    d.year = +d.year;
+                    d.suicides_no = +d.suicides_no;
+                    d.population = +d.population;
+                    d.gdp_for_year = +d.gdp_for_year;
+                })
+
+                //Nest the data by year and sum the totat suicide no.
+                var overview = d3.nest()
+                    .key(function(d) { return d.year; })
+                    .rollup(function(d) { 
+                        return d3.sum(d, function(d) { return g.suicides_no; });
+                        }).entries(data);
+
+                console.log(overview);
+            })
+        </script>
+    </body>
+</html>
+
