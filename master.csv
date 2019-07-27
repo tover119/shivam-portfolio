@@ -1,4 +1,4 @@
-country,year,sex,age,suicides_no,population, gdp_for_year ,generation
+country,year,sex,age,suicides,population,gdp,generation
 Albania,1987,male,15-24 years,21,312900,"2,156,624,900",Generation X
 Albania,1987,male,35-54 years,16,308000,"2,156,624,900",Silent
 Albania,1987,female,15-24 years,14,289700,"2,156,624,900",Generation X
@@ -1247,16 +1247,6 @@ Armenia,2015,male,15-24 years,2,216876,"10,553,337,673",Millenials
 Armenia,2015,female,25-34 years,2,274108,"10,553,337,673",Millenials
 Armenia,2015,female,5-14 years,0,175417,"10,553,337,673",Generation Z
 Armenia,2015,male,5-14 years,0,201051,"10,553,337,673",Generation Z
-Armenia,2016,male,75+ years,12,61956,"10,546,135,160",Silent
-Armenia,2016,male,55-74 years,16,237813,"10,546,135,160",Boomers
-Armenia,2016,male,35-54 years,16,350633,"10,546,135,160",Generation X
-Armenia,2016,male,15-24 years,5,202220,"10,546,135,160",Millenials
-Armenia,2016,female,75+ years,2,102414,"10,546,135,160",Silent
-Armenia,2016,female,55-74 years,6,308349,"10,546,135,160",Boomers
-Armenia,2016,male,25-34 years,4,255665,"10,546,135,160",Millenials
-Armenia,2016,female,35-54 years,3,408109,"10,546,135,160",Generation X
-Armenia,2016,female,25-34 years,2,277452,"10,546,135,160",Millenials
-Armenia,2016,female,15-24 years,1,195422,"10,546,135,160",Millenials
 Aruba,1995,male,75+ years,2,889,"1,320,670,391",G.I. Generation
 Aruba,1995,male,25-34 years,4,7520,"1,320,670,391",Generation X
 Aruba,1995,male,55-74 years,1,4558,"1,320,670,391",Silent
@@ -2157,16 +2147,6 @@ Austria,2015,female,15-24 years,19,490742,"382,065,930,308",Millenials
 Austria,2015,female,25-34 years,21,576661,"382,065,930,308",Millenials
 Austria,2015,female,5-14 years,1,400831,"382,065,930,308",Generation Z
 Austria,2015,male,5-14 years,1,421708,"382,065,930,308",Generation Z
-Austria,2016,male,75+ years,212,307692,"390,799,991,147",Silent
-Austria,2016,male,55-74 years,290,928992,"390,799,991,147",Boomers
-Austria,2016,male,35-54 years,260,1281202,"390,799,991,147",Generation X
-Austria,2016,male,25-34 years,86,605922,"390,799,991,147",Millenials
-Austria,2016,female,75+ years,61,478267,"390,799,991,147",Silent
-Austria,2016,male,15-24 years,58,525977,"390,799,991,147",Millenials
-Austria,2016,female,55-74 years,99,1009403,"390,799,991,147",Boomers
-Austria,2016,female,35-54 years,95,1273241,"390,799,991,147",Generation X
-Austria,2016,female,15-24 years,22,488020,"390,799,991,147",Millenials
-Austria,2016,female,25-34 years,18,585913,"390,799,991,147",Millenials
 Azerbaijan,1990,male,35-54 years,41,587300,"8,858,006,036",Silent
 Azerbaijan,1990,male,55-74 years,11,306200,"8,858,006,036",G.I. Generation
 Azerbaijan,1990,male,25-34 years,19,613200,"8,858,006,036",Boomers
@@ -6619,16 +6599,6 @@ Croatia,2015,female,25-34 years,7,271005,"49,425,513,611",Millenials
 Croatia,2015,female,15-24 years,6,236301,"49,425,513,611",Millenials
 Croatia,2015,female,5-14 years,2,201507,"49,425,513,611",Generation Z
 Croatia,2015,male,5-14 years,1,212625,"49,425,513,611",Generation Z
-Croatia,2016,male,75+ years,104,134519,"51,338,524,831",Silent
-Croatia,2016,male,55-74 years,187,480263,"51,338,524,831",Boomers
-Croatia,2016,male,35-54 years,146,571003,"51,338,524,831",Generation X
-Croatia,2016,male,25-34 years,48,274466,"51,338,524,831",Millenials
-Croatia,2016,female,75+ years,40,246002,"51,338,524,831",Silent
-Croatia,2016,female,55-74 years,69,551758,"51,338,524,831",Boomers
-Croatia,2016,male,15-24 years,30,242287,"51,338,524,831",Millenials
-Croatia,2016,female,35-54 years,47,570380,"51,338,524,831",Generation X
-Croatia,2016,female,15-24 years,6,231038,"51,338,524,831",Millenials
-Croatia,2016,female,25-34 years,6,265327,"51,338,524,831",Millenials
 Cuba,1992,male,75+ years,227,188700,"22,085,858,243",G.I. Generation
 Cuba,1992,male,55-74 years,347,652400,"22,085,858,243",Silent
 Cuba,1992,female,75+ years,70,202100,"22,085,858,243",G.I. Generation
@@ -7085,16 +7055,6 @@ Cyprus,2015,female,5-14 years,0,44693,"19,676,167,240",Generation Z
 Cyprus,2015,female,75+ years,0,29924,"19,676,167,240",Silent
 Cyprus,2015,male,5-14 years,0,46906,"19,676,167,240",Generation Z
 Cyprus,2015,male,75+ years,0,22961,"19,676,167,240",Silent
-Cyprus,2016,male,35-54 years,15,106925,"20,153,871,681",Generation X
-Cyprus,2016,male,15-24 years,5,58051,"20,153,871,681",Millenials
-Cyprus,2016,male,75+ years,2,24004,"20,153,871,681",Silent
-Cyprus,2016,male,55-74 years,7,85486,"20,153,871,681",Boomers
-Cyprus,2016,male,25-34 years,2,68167,"20,153,871,681",Millenials
-Cyprus,2016,female,35-54 years,3,117819,"20,153,871,681",Generation X
-Cyprus,2016,female,25-34 years,1,71307,"20,153,871,681",Millenials
-Cyprus,2016,female,55-74 years,1,90294,"20,153,871,681",Boomers
-Cyprus,2016,female,15-24 years,0,58057,"20,153,871,681",Millenials
-Cyprus,2016,female,75+ years,0,31234,"20,153,871,681",Silent
 Czech Republic,1990,male,75+ years,198,179200,"40,477,403,220",G.I. Generation
 Czech Republic,1990,male,55-74 years,385,800800,"40,477,403,220",G.I. Generation
 Czech Republic,1990,male,35-54 years,571,1421800,"40,477,403,220",Silent
@@ -7407,16 +7367,6 @@ Czech Republic,2015,female,15-24 years,19,521060,"186,829,940,546",Millenials
 Czech Republic,2015,female,25-34 years,20,698584,"186,829,940,546",Millenials
 Czech Republic,2015,female,5-14 years,5,515457,"186,829,940,546",Generation Z
 Czech Republic,2015,male,5-14 years,2,543129,"186,829,940,546",Generation Z
-Czech Republic,2016,male,75+ years,140,273637,"195,305,084,919",Silent
-Czech Republic,2016,male,55-74 years,319,1205832,"195,305,084,919",Boomers
-Czech Republic,2016,male,35-54 years,386,1617906,"195,305,084,919",Generation X
-Czech Republic,2016,male,25-34 years,137,729199,"195,305,084,919",Millenials
-Czech Republic,2016,male,15-24 years,78,527890,"195,305,084,919",Millenials
-Czech Republic,2016,female,55-74 years,86,1358948,"195,305,084,919",Boomers
-Czech Republic,2016,female,35-54 years,91,1541109,"195,305,084,919",Generation X
-Czech Republic,2016,female,75+ years,25,480884,"195,305,084,919",Silent
-Czech Republic,2016,female,25-34 years,34,691963,"195,305,084,919",Millenials
-Czech Republic,2016,female,15-24 years,22,502574,"195,305,084,919",Millenials
 Denmark,1994,male,75+ years,89,131700,"156,162,311,732",G.I. Generation
 Denmark,1994,male,55-74 years,189,448200,"156,162,311,732",Silent
 Denmark,1994,male,35-54 years,279,755600,"156,162,311,732",Boomers
@@ -10693,16 +10643,6 @@ Grenada,2015,male,35-54 years,0,11536,"997,007,926",Generation X
 Grenada,2015,male,5-14 years,0,9409,"997,007,926",Generation Z
 Grenada,2015,male,55-74 years,0,5483,"997,007,926",Boomers
 Grenada,2015,male,75+ years,0,1303,"997,007,926",Silent
-Grenada,2016,female,15-24 years,0,9543,"1,056,188,593",Millenials
-Grenada,2016,female,25-34 years,0,10271,"1,056,188,593",Millenials
-Grenada,2016,female,35-54 years,0,11222,"1,056,188,593",Generation X
-Grenada,2016,female,55-74 years,0,6392,"1,056,188,593",Boomers
-Grenada,2016,female,75+ years,0,2227,"1,056,188,593",Silent
-Grenada,2016,male,15-24 years,0,9860,"1,056,188,593",Millenials
-Grenada,2016,male,25-34 years,0,10718,"1,056,188,593",Millenials
-Grenada,2016,male,35-54 years,0,11746,"1,056,188,593",Generation X
-Grenada,2016,male,55-74 years,0,5721,"1,056,188,593",Boomers
-Grenada,2016,male,75+ years,0,1312,"1,056,188,593",Silent
 Guatemala,1986,male,25-34 years,46,522775,"7,231,963,516",Boomers
 Guatemala,1986,male,75+ years,3,36473,"7,231,963,516",G.I. Generation
 Guatemala,1986,male,15-24 years,65,804664,"7,231,963,516",Generation X
@@ -11663,16 +11603,6 @@ Hungary,2015,female,25-34 years,27,610907,"122,879,042,002",Millenials
 Hungary,2015,female,15-24 years,15,551149,"122,879,042,002",Millenials
 Hungary,2015,male,5-14 years,2,499016,"122,879,042,002",Generation Z
 Hungary,2015,female,5-14 years,1,473285,"122,879,042,002",Generation Z
-Hungary,2016,male,75+ years,214,246437,"125,816,640,421",Silent
-Hungary,2016,male,55-74 years,495,1064355,"125,816,640,421",Boomers
-Hungary,2016,male,35-54 years,450,1439105,"125,816,640,421",Generation X
-Hungary,2016,female,75+ years,120,521024,"125,816,640,421",Silent
-Hungary,2016,male,25-34 years,98,633114,"125,816,640,421",Millenials
-Hungary,2016,female,55-74 years,161,1346205,"125,816,640,421",Boomers
-Hungary,2016,male,15-24 years,58,568065,"125,816,640,421",Millenials
-Hungary,2016,female,35-54 years,121,1432415,"125,816,640,421",Generation X
-Hungary,2016,female,25-34 years,30,602785,"125,816,640,421",Millenials
-Hungary,2016,female,15-24 years,14,536865,"125,816,640,421",Millenials
 Iceland,1985,male,15-24 years,7,21900,"2,939,845,038",Generation X
 Iceland,1985,male,55-74 years,5,16400,"2,939,845,038",G.I. Generation
 Iceland,1985,male,35-54 years,7,25800,"2,939,845,038",Silent
@@ -12045,16 +11975,6 @@ Iceland,2015,female,15-24 years,0,22962,"16,942,247,374",Millenials
 Iceland,2015,female,5-14 years,0,21738,"16,942,247,374",Generation Z
 Iceland,2015,male,5-14 years,0,22771,"16,942,247,374",Generation Z
 Iceland,2015,male,75+ years,0,8619,"16,942,247,374",Silent
-Iceland,2016,male,25-34 years,8,25029,"20,304,098,101",Millenials
-Iceland,2016,male,55-74 years,10,33247,"20,304,098,101",Boomers
-Iceland,2016,male,35-54 years,11,44024,"20,304,098,101",Generation X
-Iceland,2016,male,15-24 years,6,24099,"20,304,098,101",Millenials
-Iceland,2016,male,75+ years,1,8723,"20,304,098,101",Silent
-Iceland,2016,female,25-34 years,2,23233,"20,304,098,101",Millenials
-Iceland,2016,female,55-74 years,2,32963,"20,304,098,101",Boomers
-Iceland,2016,female,15-24 years,0,22971,"20,304,098,101",Millenials
-Iceland,2016,female,35-54 years,0,43216,"20,304,098,101",Generation X
-Iceland,2016,female,75+ years,0,11268,"20,304,098,101",Silent
 Ireland,1985,male,55-74 years,65,251800,"21,295,486,383",G.I. Generation
 Ireland,1985,male,25-34 years,47,251000,"21,295,486,383",Boomers
 Ireland,1985,male,15-24 years,48,314400,"21,295,486,383",Generation X
@@ -15295,16 +15215,6 @@ Lithuania,2015,female,25-34 years,17,182926,"41,508,609,233",Millenials
 Lithuania,2015,female,15-24 years,10,178882,"41,508,609,233",Millenials
 Lithuania,2015,female,5-14 years,3,133506,"41,508,609,233",Generation Z
 Lithuania,2015,male,5-14 years,2,140115,"41,508,609,233",Generation Z
-Lithuania,2016,male,75+ years,78,80426,"42,773,029,835",Silent
-Lithuania,2016,male,55-74 years,212,277763,"42,773,029,835",Boomers
-Lithuania,2016,male,35-54 years,266,376689,"42,773,029,835",Generation X
-Lithuania,2016,male,25-34 years,96,191346,"42,773,029,835",Millenials
-Lithuania,2016,male,15-24 years,41,177888,"42,773,029,835",Millenials
-Lithuania,2016,female,75+ years,29,193001,"42,773,029,835",Silent
-Lithuania,2016,female,55-74 years,45,390385,"42,773,029,835",Boomers
-Lithuania,2016,female,35-54 years,41,406249,"42,773,029,835",Generation X
-Lithuania,2016,female,25-34 years,8,182632,"42,773,029,835",Millenials
-Lithuania,2016,female,15-24 years,6,168917,"42,773,029,835",Millenials
 Luxembourg,1985,male,75+ years,6,6900,"4,738,559,685",G.I. Generation
 Luxembourg,1985,male,55-74 years,14,30200,"4,738,559,685",G.I. Generation
 Luxembourg,1985,female,75+ years,4,13500,"4,738,559,685",G.I. Generation
@@ -16553,16 +16463,6 @@ Mauritius,2015,female,35-54 years,5,177447,"11,692,287,066",Generation X
 Mauritius,2015,female,5-14 years,0,83838,"11,692,287,066",Generation Z
 Mauritius,2015,female,75+ years,0,25820,"11,692,287,066",Silent
 Mauritius,2015,male,5-14 years,0,86385,"11,692,287,066",Generation Z
-Mauritius,2016,male,25-34 years,17,87701,"12,232,463,656",Millenials
-Mauritius,2016,male,75+ years,3,15754,"12,232,463,656",Silent
-Mauritius,2016,male,15-24 years,18,96372,"12,232,463,656",Millenials
-Mauritius,2016,male,35-54 years,33,180530,"12,232,463,656",Generation X
-Mauritius,2016,male,55-74 years,12,107902,"12,232,463,656",Boomers
-Mauritius,2016,female,15-24 years,4,94001,"12,232,463,656",Millenials
-Mauritius,2016,female,25-34 years,3,85747,"12,232,463,656",Millenials
-Mauritius,2016,female,35-54 years,6,177524,"12,232,463,656",Generation X
-Mauritius,2016,female,55-74 years,2,120603,"12,232,463,656",Boomers
-Mauritius,2016,female,75+ years,0,26298,"12,232,463,656",Silent
 Mexico,1985,male,75+ years,44,432000,"184,472,557,415",G.I. Generation
 Mexico,1985,male,55-74 years,145,2330000,"184,472,557,415",G.I. Generation
 Mexico,1985,male,25-34 years,340,5679000,"184,472,557,415",Boomers
@@ -16935,16 +16835,6 @@ Mexico,2015,female,55-74 years,88,7021916,"1,169,622,672,463",Boomers
 Mexico,2015,male,5-14 years,137,11790898,"1,169,622,672,463",Generation Z
 Mexico,2015,female,5-14 years,95,11261292,"1,169,622,672,463",Generation Z
 Mexico,2015,female,75+ years,11,1915217,"1,169,622,672,463",Silent
-Mongolia,2016,male,25-34 years,127,290660,"11,183,458,131",Millenials
-Mongolia,2016,male,35-54 years,127,375631,"11,183,458,131",Generation X
-Mongolia,2016,male,15-24 years,85,252851,"11,183,458,131",Millenials
-Mongolia,2016,male,55-74 years,29,113527,"11,183,458,131",Boomers
-Mongolia,2016,male,75+ years,3,15349,"11,183,458,131",Silent
-Mongolia,2016,female,75+ years,3,26305,"11,183,458,131",Silent
-Mongolia,2016,female,15-24 years,18,246805,"11,183,458,131",Millenials
-Mongolia,2016,female,25-34 years,15,292237,"11,183,458,131",Millenials
-Mongolia,2016,female,35-54 years,15,406028,"11,183,458,131",Generation X
-Mongolia,2016,female,55-74 years,1,148196,"11,183,458,131",Boomers
 Montenegro,2000,female,15-24 years,0,48660,"984,297,589",Generation X
 Montenegro,2000,female,25-34 years,0,43578,"984,297,589",Generation X
 Montenegro,2000,female,35-54 years,0,86210,"984,297,589",Boomers
@@ -17437,16 +17327,6 @@ Netherlands,2015,female,25-34 years,65,1030867,"757,999,453,314",Millenials
 Netherlands,2015,female,15-24 years,34,1018674,"757,999,453,314",Millenials
 Netherlands,2015,female,5-14 years,6,943082,"757,999,453,314",Generation Z
 Netherlands,2015,male,5-14 years,1,987750,"757,999,453,314",Generation Z
-Netherlands,2016,male,75+ years,123,541327,"777,227,541,581",Silent
-Netherlands,2016,male,55-74 years,436,2004642,"777,227,541,581",Boomers
-Netherlands,2016,male,35-54 years,478,2341693,"777,227,541,581",Generation X
-Netherlands,2016,male,25-34 years,159,1061905,"777,227,541,581",Millenials
-Netherlands,2016,female,75+ years,87,781301,"777,227,541,581",Silent
-Netherlands,2016,female,55-74 years,209,2037375,"777,227,541,581",Boomers
-Netherlands,2016,female,35-54 years,217,2334777,"777,227,541,581",Generation X
-Netherlands,2016,male,15-24 years,77,1067719,"777,227,541,581",Millenials
-Netherlands,2016,female,25-34 years,65,1043372,"777,227,541,581",Millenials
-Netherlands,2016,female,15-24 years,35,1025443,"777,227,541,581",Millenials
 New Zealand,1985,male,75+ years,18,46900,"24,950,895,141",G.I. Generation
 New Zealand,1985,male,55-74 years,60,235700,"24,950,895,141",G.I. Generation
 New Zealand,1985,male,25-34 years,51,255400,"24,950,895,141",Boomers
@@ -20219,16 +20099,6 @@ Qatar,2015,female,55-74 years,0,23389,"164,641,483,516",Boomers
 Qatar,2015,female,75+ years,0,2996,"164,641,483,516",Silent
 Qatar,2015,male,5-14 years,0,110987,"164,641,483,516",Generation Z
 Qatar,2015,male,75+ years,0,5591,"164,641,483,516",Silent
-Qatar,2016,male,15-24 years,13,293525,"152,451,923,077",Millenials
-Qatar,2016,male,35-54 years,27,675747,"152,451,923,077",Generation X
-Qatar,2016,male,25-34 years,21,676108,"152,451,923,077",Millenials
-Qatar,2016,male,55-74 years,2,99266,"152,451,923,077",Boomers
-Qatar,2016,female,35-54 years,3,179374,"152,451,923,077",Generation X
-Qatar,2016,female,25-34 years,2,164901,"152,451,923,077",Millenials
-Qatar,2016,female,15-24 years,0,88675,"152,451,923,077",Millenials
-Qatar,2016,female,55-74 years,0,26182,"152,451,923,077",Boomers
-Qatar,2016,female,75+ years,0,3250,"152,451,923,077",Silent
-Qatar,2016,male,75+ years,0,6093,"152,451,923,077",Silent
 Republic of Korea,1985,male,75+ years,42,154800,"100,273,097,170",G.I. Generation
 Republic of Korea,1985,male,55-74 years,393,1498300,"100,273,097,170",G.I. Generation
 Republic of Korea,1985,male,35-54 years,903,4285700,"100,273,097,170",Silent
@@ -20925,16 +20795,6 @@ Romania,2015,female,25-34 years,24,1307443,"177,911,101,680",Millenials
 Romania,2015,female,15-24 years,15,1060311,"177,911,101,680",Millenials
 Romania,2015,male,5-14 years,11,1088177,"177,911,101,680",Generation Z
 Romania,2015,female,5-14 years,4,1029722,"177,911,101,680",Generation Z
-Romania,2016,male,55-74 years,615,2068747,"187,805,922,349",Boomers
-Romania,2016,male,75+ years,171,579838,"187,805,922,349",Silent
-Romania,2016,male,35-54 years,632,2945568,"187,805,922,349",Generation X
-Romania,2016,male,25-34 years,134,1359178,"187,805,922,349",Millenials
-Romania,2016,male,15-24 years,91,1101638,"187,805,922,349",Millenials
-Romania,2016,female,75+ years,61,997868,"187,805,922,349",Silent
-Romania,2016,female,55-74 years,112,2462909,"187,805,922,349",Boomers
-Romania,2016,female,35-54 years,96,2823207,"187,805,922,349",Generation X
-Romania,2016,female,25-34 years,27,1264645,"187,805,922,349",Millenials
-Romania,2016,female,15-24 years,14,1041307,"187,805,922,349",Millenials
 Russian Federation,1989,male,75+ years,1393,1349100,"506,500,173,960",G.I. Generation
 Russian Federation,1989,male,35-54 years,12030,18058500,"506,500,173,960",Silent
 Russian Federation,1989,male,55-74 years,6250,9383700,"506,500,173,960",G.I. Generation
@@ -24715,16 +24575,6 @@ Sweden,2015,female,75+ years,38,485940,"497,918,109,302",Silent
 Sweden,2015,female,15-24 years,38,585957,"497,918,109,302",Millenials
 Sweden,2015,female,5-14 years,5,526361,"497,918,109,302",Generation Z
 Sweden,2015,male,5-14 years,3,556118,"497,918,109,302",Generation Z
-Sweden,2016,male,75+ years,100,359481,"514,459,972,806",Silent
-Sweden,2016,male,55-74 years,232,1106411,"514,459,972,806",Boomers
-Sweden,2016,male,35-54 years,266,1299990,"514,459,972,806",Generation X
-Sweden,2016,male,25-34 years,114,670158,"514,459,972,806",Millenials
-Sweden,2016,male,15-24 years,70,605396,"514,459,972,806",Millenials
-Sweden,2016,female,35-54 years,119,1257582,"514,459,972,806",Generation X
-Sweden,2016,female,55-74 years,104,1120938,"514,459,972,806",Boomers
-Sweden,2016,female,75+ years,45,493341,"514,459,972,806",Silent
-Sweden,2016,female,25-34 years,44,641572,"514,459,972,806",Millenials
-Sweden,2016,female,15-24 years,36,570983,"514,459,972,806",Millenials
 Switzerland,1995,male,75+ years,146,165500,"342,617,007,104",G.I. Generation
 Switzerland,1995,male,55-74 years,262,593600,"342,617,007,104",Silent
 Switzerland,1995,male,35-54 years,358,1026800,"342,617,007,104",Boomers
@@ -25301,16 +25151,6 @@ Thailand,2015,female,25-34 years,96,4783703,"401,399,422,443",Millenials
 Thailand,2015,female,15-24 years,55,4632371,"401,399,422,443",Millenials
 Thailand,2015,female,5-14 years,14,3881727,"401,399,422,443",Generation Z
 Thailand,2015,male,5-14 years,12,4111704,"401,399,422,443",Generation Z
-Thailand,2016,male,55-74 years,734,5203957,"411,755,164,833",Boomers
-Thailand,2016,male,35-54 years,1421,10084647,"411,755,164,833",Generation X
-Thailand,2016,male,75+ years,152,1124052,"411,755,164,833",Silent
-Thailand,2016,male,25-34 years,646,4796355,"411,755,164,833",Millenials
-Thailand,2016,male,15-24 years,322,4736305,"411,755,164,833",Millenials
-Thailand,2016,female,75+ years,69,1589015,"411,755,164,833",Silent
-Thailand,2016,female,55-74 years,222,6049756,"411,755,164,833",Boomers
-Thailand,2016,female,35-54 years,375,10629684,"411,755,164,833",Generation X
-Thailand,2016,female,25-34 years,116,4702656,"411,755,164,833",Millenials
-Thailand,2016,female,15-24 years,60,4525574,"411,755,164,833",Millenials
 Trinidad and Tobago,1985,male,35-54 years,9,100000,"7,375,918,367",Silent
 Trinidad and Tobago,1985,male,25-34 years,8,93000,"7,375,918,367",Boomers
 Trinidad and Tobago,1985,male,55-74 years,2,51000,"7,375,918,367",G.I. Generation
