@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html>
     <style>
-        .line {
+        .lineFemale {
             fill: none;
-            stroke:black;
+            stroke:#ff7ae0;
+            stroke-width: 3;
+        }
+        .lineMale {
+            fill: none;
+            stroke:#61b8ff;
             stroke-width: 3;
         }
 
@@ -21,6 +26,7 @@
         #select {
             position: absolute;
             left: 550px;
+            top: 930px;
         }
 
         .active, .btn:hover {
@@ -34,9 +40,71 @@
             justify-content: center;
         }
 
+        /* Tooltip CSS */
+        .d3-tip {
+            line-height: 1.5;
+            font-weight: 400;
+            font-family:"avenir next", Arial, sans-serif;
+            padding: 6px;
+            background: rgba(0, 0, 0, 0.6);
+            color: rgb(172, 243, 248);
+            border-radius: 1px;
+            pointer-events: none;
+        }
+
+        /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {      
+            box-sizing: border-box;
+            display: inline;
+            font-size: 8px;
+            width: 100%;
+            line-height: 1.5;
+            color: rgba(0, 0, 0, 0.6);
+            position: absolute;
+            pointer-events: none;
+            
+        }
+
+        /* Northward tooltips */
+        .d3-tip.n:after {
+            content: "\25BC";
+            margin: -1px 0 0 0;
+            top: 100%;
+            left: 0;
+            text-align: center;
+        }
+
+        /* Eastward tooltips */
+        .d3-tip.e:after {
+            content: "\25C0";
+            margin: -4px 0 0 0;
+            top: 50%;
+            left: -8px;
+        }
+
+        /* Southward tooltips */
+        .d3-tip.s:after {
+            content: "\25B2";
+            margin: 0 0 1px 0;
+            top: -8px;
+            left: 0;
+            text-align: center;
+        }
+
+        /* Westward tooltips */
+        .d3-tip.w:after {
+            content: "\25B6";
+            margin: -4px 0 0 -1px;
+            top: 50%;
+            left: 100%;
+        }
+
     </style>
     <head>
         <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+        <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
     </head>
 
     <body>
@@ -55,10 +123,23 @@
             <label>Select Year:</label>
             <select id="year"></select>
         </div>
+        <br><br>
         <script>
-            var margin = {top: 100, bottom: 75, right: 50, left: 100};
-            var width = 1000 - margin.left - margin.right;
-            var height = 800 - margin.top - margin.bottom;
+
+            // Set tooltips
+            const tip = d3.tip()
+                .attr('class', 'd3-tip')
+                .offset([-10, 0])
+                .html(function(d) {
+                    if (d.suicides == 0) {
+                        return `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong># of Suicides: No Data Found`;
+                    }else{
+                        return `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong># of Suicides: </strong><span class='details'>${d.suicides}</span>`;
+                    }}); 
+
+            var margin = {top: 100, bottom: 200, right: 500, left: 500};
+            var width = window.innerWidth - margin.left - margin.right;
+            var height = window.innerHeight - margin.top - margin.bottom;
 
             //scene number
             var scene = 1;
@@ -117,57 +198,84 @@
 
                     //Nest the data by year and sum the totat suicide no.
                     var overview = d3.nest()
-                        .key(function(d) { return d.year; }).sortKeys(d3.ascending)
-                        .rollup(function(year) { 
-                            return d3.sum(year, function(g) { return g.suicides; });
+                        .key(function(d) { return d.country; }).sortKeys(d3.ascending)
+                        .rollup(function(country) { 
+                            return d3.sum(country, function(g) { return g.suicides; });
                             }).entries(data)
                         .map(function(d) {
-                            return {year: d.key, suicides: d.value };
+                            return {country: d.key, suicides: d.value };
                         });
 
-                    //Add the domain values (date, suicides)
-                    x.domain(d3.extent(overview, function(d) { return d.year; }));
-                    y.domain(d3.extent([100000].concat(overview.map(function(d) { return d.suicides; }))));
+                    var path = d3.geoPath();
+                    var projection = d3.geoRobinson()
+                        .scale(190)
+                        .translate([width / 2, height/2 ])
+                    var path = d3.geoPath()
+                        .projection(projection);
 
-                    var xAxis = d3.axisBottom().scale(x)
-                        .ticks(20);
-
-                    var yAxis = d3.axisLeft().scale(y)
-                        .ticks(20);
-
-                    buildAxis(xAxis, "Year", yAxis, "# of suicides (world total)");
-
-                    //Make gridlines
-                    svg.append("g")
-                        .attr("class", "grid")
-                        .attr("transform", "translate(0," + height + ")")
-                        .call(make_x_gridlines()
-                            .tickSize(-height)
-                            .tickFormat(""));
-
-                    //Make gridlines
-                    svg.append("g")
-                        .attr("class", "grid")
-                        .call(make_y_gridlines()
-                            .tickSize(-width)
-                            .tickFormat(""));
+                    svg.call(tip);
 
 
-                    svg.append("path")
-                        .datum(overview)
-                        .attr("class", "line")
-                        .attr("d", line);
+                    // Data and color scale
+                    var map = d3.map();
+                    var colorScale = d3.scaleThreshold()
+                        .domain([0, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 2000000, 10000000])
+                        .range(['rgb(247,251,255)', 
+                        'rgb(198,219,239)', 
+                        'rgb(158,202,225)',
+                        'rgb(107,174,214)',
+                        'rgb(66,146,198)',
+                        'rgb(33,113,181)',
+                        'rgb(8,81,156)',
+                        'rgb(8,48,107)',
+                        'rgb(3,19,43)']);
 
-                    //Append the dots
-                    svg.selectAll("circle")
-                        .data(overview)
-                        .enter().append("circle")
-                            .attr("cx", function(d, i) { return x(d.year); })
-                            .attr("cy", function(d) { return y(d.suicides);})
-                            .attr("r", 5)
-                })
+                    // Load external data and boot
+                    d3.json("topology.json").then(function(topo) {
+                        // Draw the map
+
+                        console.log(map);
+                        overview.forEach(function(d) {
+
+                            map.set(d.country, d.suicides);
+                        })
+
+                        console.log(map);
+
+                        svg.append("g")
+                            .attr("class", "countries")
+                            .selectAll("path")
+                            .data(topo.features)
+                            .enter().append("path")
+                                .attr("fill", function (d){
+                                    // Pull data for this country
+                                    
+                                    d.suicides = map.get(d.properties.name) || 0;
+                                    // Set the color
+                                    return colorScale(d.suicides);
+                                })
+                                .attr("d", path)
+                                .on('mouseover',function(d){
+                                    tip.show(d);
+                                    d3.select(this)
+                                    .style('opacity', .8)
+                                    .style('stroke-width', 3);
+                                })
+                                .on('mouseout', function(d){
+                                    tip.hide(d);
+                                    d3.select(this)
+                                    .style('opacity', 1)
+                                    .style('stroke-width',0.3);
+                                });
+
+                        makeBorder(height, width+250, -100, 0)                   
+                    })
                     .catch(function(error) {
-                console.log(error);
+                        console.log(error);    
+                    })
+                })
+                .catch(function(error) {
+                    console.log(error);
                 })
             }
 
@@ -184,6 +292,13 @@
                     .enter().append("option")
                         .text(function(d) { return d; })
 
+                    //Make gridlines
+                    svg.append("g")
+                        .attr("class", "grid")
+                        .call(make_y_gridlines()
+                            .tickSize(-width)
+                            .tickFormat(""));
+                            
                     //Group for rect and text
                     var gs = svg.append("g");
                     
@@ -208,7 +323,8 @@
                     var yAxis = d3.axisLeft()
                         .scale(yScale);
 
-                    buildAxis(xAxis, "Age Group", yAxis, "# of suicides (world total)");
+                    buildAxis(xAxis, "Age Group", yAxis, "# of suicides");
+                    
 
                     var filtered = data.filter(function(f) { return f.year == yearVal});
                     var barWidth = width/filtered.length;
@@ -217,6 +333,7 @@
 		                .on("change", function() {
 			                update(this.value)
 		                })
+
 
                     gs.selectAll("rect")
                         .data(filtered)
@@ -265,7 +382,7 @@
                             })
                             
 
-                        svg.selectAll("text")
+                        gs.selectAll("text")
                             .data(filtered)
                             .transition()
                                 .delay(function(d, i) {
@@ -283,6 +400,9 @@
                                 .attr("font-size", "11px")
                                 .attr("fill", "black");
                     }
+
+                    
+                    makeBorder(height+100, width+200, -100, -25);
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -290,7 +410,8 @@
             }
 
             function makeGenderScene() {
-
+                var hide = document.getElementById('select');
+                hide.style.visibility = 'hidden';
                 //Read in the data
                 d3.csv("master.csv").then(function(data) {
 
@@ -302,20 +423,100 @@
                         d.gdp = +d.gdp;
                     })
 
-                    var sexOverview = d3.nest()
-                        .key(function(d) { return d.year; })
-                        .key(function(d) { return d.sex; })
+                    var male = d3.nest()
+                        .key(function(d) { return d.year; }).sortKeys(d3.ascending)
                         .rollup(function(year) { 
-                            return d3.sum(year, function(g) { return g.suicides; });
-                        }).entries(data);
+                            return d3.sum(year, function(g) { 
+                                if (g.sex == "male") { return g.suicides; }});
+                        }).entries(data)
+                        .map(function(d) {
+                            return {year: d.key, suicides: d.value };
+                        });
+                    
+                    var female = d3.nest()
+                        .key(function(d) { return d.year; }).sortKeys(d3.ascending)
+                        .rollup(function(year) { 
+                            return d3.sum(year, function(g) { 
+                                if (g.sex == "female") { return g.suicides; }});
+                        }).entries(data)
+                        .map(function(d) {
+                            return {year: d.key, suicides: d.value };
+                        });
 
-                    console.log(sexOverview);
+                    x.domain(d3.extent(male, function(d) { return d.year; }));
+                    y.domain(d3.extent([0,210000].concat(male.map(function(d) { return d.suicides; }))
+                    .concat(female.map(function(d) { return d.suicides; }))));
+
+                    var xAxis = d3.axisBottom().scale(x)
+                        .ticks(20);
+
+                    var yAxis = d3.axisLeft().scale(y)
+                        .ticks(20);
+
+                    buildAxis(xAxis, "Year", yAxis, "# of suicides (world total)");
+
+                    //Make gridlines
+                    svg.append("g")
+                        .attr("class", "grid")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(make_x_gridlines()
+                            .tickSize(-height)
+                            .tickFormat(""));
+
+                    //Make gridlines
+                    svg.append("g")
+                        .attr("class", "grid")
+                        .call(make_y_gridlines()
+                            .tickSize(-width)
+                            .tickFormat(""));
+
+                    //Male Path
+                    svg.append("path")
+                        .datum(male)
+                        .attr("class", "lineMale")
+                        .attr("d", line);
+
+                    //Male Path
+                    svg.append("path")
+                        .datum(female)
+                        .attr("class", "lineFemale")
+                        .attr("d", line);
+
+                    //Append the dots
+                    svg.selectAll("circle")
+                        .data(male)
+                        .enter().append("circle")
+                            .attr("cx", function(d, i) { return x(d.year); })
+                            .attr("cy", function(d) { return y(d.suicides);})
+                            .attr("r", 4);
+
+                    svg.selectAll("circles")
+                        .data(female)
+                        .enter().append("circle")
+                            .attr("cx", function(d, i) { return x(d.year); })
+                            .attr("cy", function(d) { return y(d.suicides);})
+                            .attr("r", 4);
+
+                    makeBorder(height+100, width+200, -100, -25);
+
                 })
                 .catch(function(error) {
                     console.log(error);
                 })
             }
             
+            function makeBorder(h, w, tw, th) {
+                svg.append("g")
+                    .attr("transform", "translate(" + tw + "," + th +")") 
+                    .append("rect")
+                        .attr("x", 0)
+                        .attr("y", 0)
+                        .attr("height", h)
+                        .attr("width", w)
+                        .style("stroke", "black")
+                        .style("fill", "none")
+                        .style("stroke-width", border); 
+            }
             function buildAxis(xAxis, xTag, yAxis, yTag) {
                 //Call the x axis in a group tag
                 svg.append("g")
@@ -336,7 +537,7 @@
                 //Label y axis
                 svg.append("text")
                     .attr("transform", "rotate(-90)")
-                    .attr("y", 0-margin.left+10)
+                    .attr("y", -85)
                     .attr("x", 0-(height/2)-100)
                     .attr("dy", "1em")
                     .text(yTag);
