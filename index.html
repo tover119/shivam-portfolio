@@ -20,13 +20,12 @@
 
         #buttonRow {
             position: absolute;
-            left: 550px;
+            left: 115px;
             top: 75px;
         }
         #select {
             position: absolute;
-            left: 550px;
-            top: 930px;
+            left: 115px;
         }
 
         .active, .btn:hover {
@@ -34,11 +33,6 @@
             color: white;
         }
 
-        #chart {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
 
         /* Tooltip CSS */
         .d3-tip {
@@ -98,9 +92,37 @@
             top: 50%;
             left: 100%;
         }
+        /* Set gray background color and 100% height */
+        .sidenav {
+            background-color: #3d3d3d;
+            height: 100%;
+        }
+        p, #prompt, #description {
+            color: #ffff;
+        }
+        .row.content {height: 1500px}
+
+        .col-sm-9 {
+            background-color: #ebebeb;
+            height: 100%;
+        }
+
+        #chart {
+            position:relative;
+            left: 100px;
+            max-width: 1200px;
+            background-color: #ffffff;
+            border: 5px solid #3d3d3d;
+
+        }
 
     </style>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
         <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
@@ -108,23 +130,42 @@
     </head>
 
     <body>
-        <p style="text-align:center">SUICIDE RATES BY COUNTRY AND AGE</p>
-        <div id="buttonRow">
-            <label>Scene Navigation:</label><br><br>
-            <button id="previous" onclick="setScene(scene-1)" disabled>Previous</button>
-            <button class="btn active" id="1" onclick="setScene(1)">1</button>
-            <button class="btn" id="2" onclick="setScene(2)">2</button>
-            <button class="btn" id="3" onclick="setScene(3)">3</button>
-            <button id="next" onclick="setScene(scene+1)">Next</button>
-        </div><br>
-        
-        <div id="chart"></div>
-        <div id="select">
-            <label>Select Year:</label>
-            <select id="year"></select>
+        <div class="container-fluid">
+            <div class="row content">
+                <div class="col-sm-3 sidenav">
+                    <br>
+                    <p>SUICIDE RATES BY COUNTRY AND AGE</p>
+                    <br>
+                    <span id="prompt">The graphs shown on this page provide insight into world suicide statistics spanning several years. All numbers are normalized by population and show the amount of deaths per 100,000 people.
+                        <br/><br/>Navigate through the scenes using the buttons above each chart to show different metrics. Date parameters and tooltips are available to provide further insight into the material displayed in each chart.
+                        <br/>______________________________________________________
+                    </span>
+                    <br><br>
+                    <span id="description">This shows text for chart one</span>
+                </div>
+            
+            <div class="col-sm-9">
+
+                <div id="buttonRow" class="btn-group">
+                    <label>Scene Navigation:</label><br>
+                    <button class="btn btn-primary" id="previous" onclick="setScene(scene-1)" disabled>Previous</button>
+                    <button class="btn active" id="1" onclick="setScene(1)">1</button>
+                    <button class="btn" id="2" onclick="setScene(2)">2</button>
+                    <button class="btn" id="3" onclick="setScene(3)">3</button>
+                    <button class="btn btn-primary" id="next" onclick="setScene(scene+1)">Next</button>
+                </div><br><br><br><br><br><br><br><br>
+                    <div id="chart"></div><br>
+                    <div id="select">
+                        <label>Select Year:</label>
+                        <select id="year"></select>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
         </div>
-        <br><br>
-        <script>
+    <script>
 
             // Set tooltips
             const tip = d3.tip()
@@ -137,13 +178,13 @@
                         return `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong># of Suicides: </strong><span class='details'>${d.suicides}</span>`;
                     }}); 
 
-            var margin = {top: 100, bottom: 200, right: 500, left: 500};
-            var width = window.innerWidth - margin.left - margin.right;
-            var height = window.innerHeight - margin.top - margin.bottom;
+            var margin = {top: 75, bottom: 75, right: 100, left: 125};
+            var width = 1200 - margin.left - margin.right;
+            var height = 700 - margin.top - margin.bottom;
 
             //scene number
             var scene = 1;
-            var yearVal = 1985;
+            var yearVal = 1990;
 
             //Date
             var dateFormat = d3.timeFormat("%Y");
@@ -186,7 +227,7 @@
                 var hide = document.getElementById('select');
                 hide.style.visibility = 'hidden';
                 //Read in the data
-                d3.csv("master.csv").then(function(data) {
+                d3.csv("suicide-death-rates.csv").then(function(data) {
 
                     //Translate number values
                     data.forEach(function(d) {
@@ -198,18 +239,18 @@
 
                     //Nest the data by year and sum the totat suicide no.
                     var overview = d3.nest()
-                        .key(function(d) { return d.country; }).sortKeys(d3.ascending)
+                        .key(function(d) { return d.code; }).sortKeys(d3.ascending)
                         .rollup(function(country) { 
                             return d3.sum(country, function(g) { return g.suicides; });
                             }).entries(data)
                         .map(function(d) {
-                            return {country: d.key, suicides: d.value };
+                            return {code: d.key, suicides: d.value };
                         });
 
                     var path = d3.geoPath();
                     var projection = d3.geoRobinson()
-                        .scale(190)
-                        .translate([width / 2, height/2 ])
+                        .scale(210)
+                        .translate([width/2.2, height/2 ])
                     var path = d3.geoPath()
                         .projection(projection);
 
@@ -219,28 +260,26 @@
                     // Data and color scale
                     var map = d3.map();
                     var colorScale = d3.scaleThreshold()
-                        .domain([0, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 2000000, 10000000])
-                        .range(['rgb(247,251,255)', 
-                        'rgb(198,219,239)', 
-                        'rgb(158,202,225)',
-                        'rgb(107,174,214)',
-                        'rgb(66,146,198)',
-                        'rgb(33,113,181)',
-                        'rgb(8,81,156)',
-                        'rgb(8,48,107)',
-                        'rgb(3,19,43)']);
+                        .domain([100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000])
+                        .range(['rgb(237,248,255)',
+                        'rgb(197,222,240)', 
+                        'rgb(162,204,232)',
+                        'rgb(136,186,219)', 
+                        'rgb(105,163,201)',
+                        'rgb(73,140,184)',
+                        'rgb(48,113,156)',
+                        'rgb(30,93,135)',
+                        'rgb(20,81,122)',
+                        'rgb(10,62,97)',
+                        'rgb(4,51,82)',
+                        'rgb(0, 29, 48)']);
 
                     // Load external data and boot
                     d3.json("topology.json").then(function(topo) {
                         // Draw the map
-
-                        console.log(map);
                         overview.forEach(function(d) {
-
-                            map.set(d.country, d.suicides);
+                            map.set(d.code, d.suicides);
                         })
-
-                        console.log(map);
 
                         svg.append("g")
                             .attr("class", "countries")
@@ -250,7 +289,7 @@
                                 .attr("fill", function (d){
                                     // Pull data for this country
                                     
-                                    d.suicides = map.get(d.properties.name) || 0;
+                                    d.suicides = map.get(d.id) || 0;
                                     // Set the color
                                     return colorScale(d.suicides);
                                 })
@@ -267,8 +306,6 @@
                                     .style('opacity', 1)
                                     .style('stroke-width',0.3);
                                 });
-
-                        makeBorder(height, width+250, -100, 0)                   
                     })
                     .catch(function(error) {
                         console.log(error);    
@@ -283,8 +320,8 @@
                 var hide = document.getElementById('select');
                 hide.style.visibility = 'visible';
                 //Read in the data
-                d3.csv("AgeData.csv").then(function(data) {
-
+                d3.csv("suicideAge.csv").then(function(data) {
+                    console.log(data);
                     var year  = [...new Set(data.map(function(d) { return +d.year; }))];
 
                     var options = d3.select("#select").select("#year").selectAll("option")
@@ -323,7 +360,7 @@
                     var yAxis = d3.axisLeft()
                         .scale(yScale);
 
-                    buildAxis(xAxis, "Age Group", yAxis, "# of suicides");
+                    buildAxis(xAxis, "Age Group", yAxis, "# of suicides (Per 100,000 People");
                     
 
                     var filtered = data.filter(function(f) { return f.year == yearVal});
@@ -334,6 +371,7 @@
 			                update(this.value)
 		                })
 
+                    console.log(filtered);
 
                     gs.selectAll("rect")
                         .data(filtered)
@@ -399,10 +437,7 @@
                                 .attr("font-family", "sans-serif")
                                 .attr("font-size", "11px")
                                 .attr("fill", "black");
-                    }
-
-                    
-                    makeBorder(height+100, width+200, -100, -25);
+                    }                    
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -413,38 +448,37 @@
                 var hide = document.getElementById('select');
                 hide.style.visibility = 'hidden';
                 //Read in the data
-                d3.csv("master.csv").then(function(data) {
+                d3.csv("suicideGender.csv").then(function(data) {
 
                     //Translate number values
                     data.forEach(function(d) {
                         d.year = +d.year;
                         d.suicides = +d.suicides;
-                        d.population = +d.population;
-                        d.gdp = +d.gdp;
                     })
 
                     var male = d3.nest()
                         .key(function(d) { return d.year; }).sortKeys(d3.ascending)
                         .rollup(function(year) { 
                             return d3.sum(year, function(g) { 
-                                if (g.sex == "male") { return g.suicides; }});
+                                return g.male; });
                         }).entries(data)
                         .map(function(d) {
                             return {year: d.key, suicides: d.value };
                         });
                     
+                    console.log(male);
                     var female = d3.nest()
                         .key(function(d) { return d.year; }).sortKeys(d3.ascending)
                         .rollup(function(year) { 
                             return d3.sum(year, function(g) { 
-                                if (g.sex == "female") { return g.suicides; }});
+                                return g.female; });
                         }).entries(data)
                         .map(function(d) {
                             return {year: d.key, suicides: d.value };
                         });
 
                     x.domain(d3.extent(male, function(d) { return d.year; }));
-                    y.domain(d3.extent([0,210000].concat(male.map(function(d) { return d.suicides; }))
+                    y.domain(d3.extent([0].concat(male.map(function(d) { return d.suicides; }))
                     .concat(female.map(function(d) { return d.suicides; }))));
 
                     var xAxis = d3.axisBottom().scale(x)
@@ -453,7 +487,7 @@
                     var yAxis = d3.axisLeft().scale(y)
                         .ticks(20);
 
-                    buildAxis(xAxis, "Year", yAxis, "# of suicides (world total)");
+                    buildAxis(xAxis, "Year", yAxis, "# of suicides (world total) - Per 100,000 people");
 
                     //Make gridlines
                     svg.append("g")
@@ -496,26 +530,10 @@
                             .attr("cx", function(d, i) { return x(d.year); })
                             .attr("cy", function(d) { return y(d.suicides);})
                             .attr("r", 4);
-
-                    makeBorder(height+100, width+200, -100, -25);
-
                 })
                 .catch(function(error) {
                     console.log(error);
                 })
-            }
-            
-            function makeBorder(h, w, tw, th) {
-                svg.append("g")
-                    .attr("transform", "translate(" + tw + "," + th +")") 
-                    .append("rect")
-                        .attr("x", 0)
-                        .attr("y", 0)
-                        .attr("height", h)
-                        .attr("width", w)
-                        .style("stroke", "black")
-                        .style("fill", "none")
-                        .style("stroke-width", border); 
             }
             function buildAxis(xAxis, xTag, yAxis, yTag) {
                 //Call the x axis in a group tag
@@ -548,6 +566,8 @@
                 scene = sceneNum;
                 // Get the container element
                 var btnContainer = document.getElementById("buttonRow");
+                var text = document.getElementById("description");
+
 
                 // Get all buttons with class="btn" inside the container
                 var btns = btnContainer.getElementsByClassName("btn");
@@ -555,7 +575,7 @@
                 //Set active button
                 var current = document.getElementsByClassName("active");
                 current[0].className = current[0].className.replace(" active", "");
-                btns[scene-1].className += " active";
+                btns[scene].className += " active";
 
                 //Clear the canvas
                 svg.selectAll("*").remove();
@@ -570,14 +590,17 @@
                     case 1:
                         prev.disabled = true;
                         next.disabled = false;
+                        text.innerText = "This is text for scene 1";
                         makeOverviewScene();
                         break;
                     case 2:
+                        text.innerText = "This is text for scene 2";
                         makeAgeScene();
                         break;
                     case 3:
                         next.disabled = true;
                         prev.disabled = false;
+                        text.innerText = "This is text for scene 3";
                         makeGenderScene();
                         break;
                 }
