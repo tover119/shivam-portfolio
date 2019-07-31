@@ -33,7 +33,10 @@
             color: white;
         }
 
-
+        .title {
+            font-weight: bold;
+            font-size: 18px;
+        }
         /* Tooltip CSS */
         .d3-tip {
             line-height: 1.5;
@@ -116,6 +119,12 @@
 
         }
 
+        /* Legend Position Style */
+        .legendMap {
+	        position:absolute;
+	        left:20px;
+	        top:30px;
+        }
     </style>
     <head>
         <meta charset="utf-8">
@@ -168,7 +177,7 @@
     <script>
 
             // Set tooltips
-            const tip = d3.tip()
+            const tipMap = d3.tip()
                 .attr('class', 'd3-tip')
                 .offset([-10, 0])
                 .html(function(d) {
@@ -176,7 +185,14 @@
                         return `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong># of Suicides: No Data Found`;
                     }else{
                         return `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong># of Suicides: </strong><span class='details'>${d.suicides}</span>`;
-                    }}); 
+                    }});
+
+            const tipGender = d3.tip()
+                .attr('class', 'd3-tip')
+                .offset([-10, 0])
+                .html(function(d) {
+                    return `<strong>Year: </strong><span class='details'>${d.year}<br></span><strong># of Suicides (world total): </strong><span class='details'>${d.suicides}</span>`;
+                }); 
 
             var margin = {top: 75, bottom: 75, right: 100, left: 125};
             var width = 1200 - margin.left - margin.right;
@@ -250,15 +266,16 @@
                     var path = d3.geoPath();
                     var projection = d3.geoRobinson()
                         .scale(210)
-                        .translate([width/2.2, height/2 ])
+                        .translate([width/2.2, height/1.75 ])
                     var path = d3.geoPath()
                         .projection(projection);
 
-                    svg.call(tip);
+                    svg.call(tipMap);
 
 
                     // Data and color scale
                     var map = d3.map();
+                    var colorDomain = [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000];
                     var colorScale = d3.scaleThreshold()
                         .domain([100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000])
                         .range(['rgb(237,248,255)',
@@ -295,17 +312,67 @@
                                 })
                                 .attr("d", path)
                                 .on('mouseover',function(d){
-                                    tip.show(d);
+                                    tipMap.show(d);
                                     d3.select(this)
                                     .style('opacity', .8)
                                     .style('stroke-width', 3);
                                 })
                                 .on('mouseout', function(d){
-                                    tip.hide(d);
+                                    tipMap.hide(d);
                                     d3.select(this)
                                     .style('opacity', 1)
                                     .style('stroke-width',0.3);
                                 });
+
+                        var title = "World Suicide Statistics (Per 100,000 People)"
+                        //append title
+                        svg.append("text")
+                            .attr("class", "title")
+                            .attr("y", margin.top-140)
+                            .attr("x", (width-margin.left-margin.right)/4+75)
+                            .attr("dy", "1em")
+                            .text(title);
+
+                        // append gradient bar
+                        var gradient = svg.append('defs')
+                            .append('linearGradient')
+                                .attr('id', 'gradient')
+                                .attr('x1', '0%') // bottom
+                                .attr('y1', '100%')
+                                .attr('x2', '0%') // to top
+                                .attr('y2', '0%')
+                                .attr('spreadMethod', 'pad');
+
+                        gradient.selectAll("stop")
+                            .data([
+                                {offset: "0%", color: "rgb(237,248,255)"},
+                                {offset: "25%", color: "rgb(162,204,232)"},
+                                {offset: "50%", color: "rgb(73,140,184)"},
+                                {offset: "75%", color: "rgb(20,81,122)"},
+                                {offset: "100%", color: "rgb(0, 29, 48)"},
+                                ])
+                            .enter().append("stop")
+                            .attr("offset", function(d) { return d.offset; })
+                            .attr("stop-color", function(d) { return d.color; });
+
+                        svg.append('rect')
+                            .attr('x', -100)
+                            .attr('y', height - margin.bottom-200)
+                            .attr('width', 25)
+                            .attr('height', 300)
+                            .style('fill', 'url(#gradient)');
+
+                        //create tick marks
+                        var xLeg = d3.scaleLinear()
+                            .domain(colorDomain)
+                            .range([292, 268, 240, 216, 192, 168, 144, 120, 96, 72, 48, 24, 0]);
+
+                        var axisLeg = d3.axisRight(xLeg)
+                            .tickValues(colorScale.domain())
+
+                        svg.append("g")
+                            .attr("transform", "translate(-60, 275)")
+                            .call(axisLeg);
                     })
                     .catch(function(error) {
                         console.log(error);    
@@ -319,10 +386,24 @@
             function makeAgeScene() {
                 var hide = document.getElementById('select');
                 hide.style.visibility = 'visible';
+     
                 //Read in the data
                 d3.csv("suicideAge.csv").then(function(data) {
                     console.log(data);
                     var year  = [...new Set(data.map(function(d) { return +d.year; }))];
+
+                    var colorScale = d3.scaleThreshold()
+                        .domain([100, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000])
+                        .range([
+                        'rgb(162,204,232)',
+                        'rgb(136,186,219)', 
+                        'rgb(105,163,201)',
+                        'rgb(73,140,184)',
+                        'rgb(48,113,156)',
+                        'rgb(30,93,135)',
+                        'rgb(20,81,122)',
+                        'rgb(10,62,97)',
+                        'rgb(4,51,82)']);
 
                     var options = d3.select("#select").select("#year").selectAll("option")
                         .data(year)
@@ -360,7 +441,7 @@
                     var yAxis = d3.axisLeft()
                         .scale(yScale);
 
-                    buildAxis(xAxis, "Age Group", yAxis, "# of suicides (Per 100,000 People");
+                    buildAxis(xAxis, "Age Group", yAxis, "# of suicides (Per 100,000 People)", "Suicides by Age Group - Per 100,00 People");
                     
 
                     var filtered = data.filter(function(f) { return f.year == yearVal});
@@ -371,12 +452,10 @@
 			                update(this.value)
 		                })
 
-                    console.log(filtered);
-
                     gs.selectAll("rect")
                         .data(filtered)
                         .enter().append("rect")
-                        .style("fill", "steelblue")
+                        .style("fill", function(d) { return colorScale(d.suicides); })
                         .attr("width", barWidth - 5)
                         .attr("x", function(d, i) { return i * barWidth; })
                         .attr("y", function(d) { return yScale(d.suicides); })
@@ -418,6 +497,8 @@
                             .attr("height", function(d) {
                                 return height - yScale(d.suicides);
                             })
+                            .style("fill", function(d) { return colorScale(d.suicides); });
+
                             
 
                         gs.selectAll("text")
@@ -447,8 +528,10 @@
             function makeGenderScene() {
                 var hide = document.getElementById('select');
                 hide.style.visibility = 'hidden';
+                svg.call(tipGender);
+
                 //Read in the data
-                d3.csv("suicideGender.csv").then(function(data) {
+                d3.csv("genderData.csv").then(function(data) {
 
                     //Translate number values
                     data.forEach(function(d) {
@@ -487,7 +570,7 @@
                     var yAxis = d3.axisLeft().scale(y)
                         .ticks(20);
 
-                    buildAxis(xAxis, "Year", yAxis, "# of suicides (world total) - Per 100,000 people");
+                    buildAxis(xAxis, "Year", yAxis, "# of suicides (world total)", "World Suicide Totals by Gender");
 
                     //Make gridlines
                     svg.append("g")
@@ -522,20 +605,85 @@
                         .enter().append("circle")
                             .attr("cx", function(d, i) { return x(d.year); })
                             .attr("cy", function(d) { return y(d.suicides);})
-                            .attr("r", 4);
+                            .attr("r", 4)
+                            .on('mouseover',function(d){
+                                    tipGender.show(d);
+                                    d3.select(this)
+                                    .style('opacity', .8)
+                                    .style('stroke-width', 3);
+                                })
+                                .on('mouseout', function(d){
+                                    tipGender.hide(d);
+                                    d3.select(this)
+                                    .style('opacity', 1)
+                                    .style('stroke-width',0.3);
+                                });
 
                     svg.selectAll("circles")
                         .data(female)
                         .enter().append("circle")
                             .attr("cx", function(d, i) { return x(d.year); })
                             .attr("cy", function(d) { return y(d.suicides);})
-                            .attr("r", 4);
+                            .attr("r", 4)
+                            .on('mouseover',function(d){
+                                    tipGender.show(d);
+                                    d3.select(this)
+                                    .style('opacity', .8)
+                                    .style('stroke-width', 3);
+                                })
+                                .on('mouseout', function(d){
+                                    tipGender.hide(d);
+                                    d3.select(this)
+                                    .style('opacity', 1)
+                                    .style('stroke-width',0.3);
+                                });
+
+                    var rectWidth = 40, rectHeight = 5;
+                    //Add Legend
+                    svg.append("rect")
+                        .attr("x", 0)
+                        .attr("y", height+margin.bottom/2+10)
+                        .attr("height", rectHeight)
+                        .attr("width", rectWidth)
+                        .attr("fill", "#61b8ff");
+                    
+                    svg.append("text")
+                        .attr("x", 50)
+                        .attr("y", height+margin.bottom/2+15)
+                        .text("- Male");
+
+                    svg.append("rect")
+                        .attr("x", rectWidth*3)
+                        .attr("y", height+margin.bottom/2+10)
+                        .attr("height", rectHeight)
+                        .attr("width", rectWidth)
+                        .attr("fill", "#ff7ae0");
+                    
+                    svg.append("text")
+                        .attr("x", rectWidth*3+50)
+                        .attr("y", height+margin.bottom/2+15)
+                        .text("- Female");
                 })
                 .catch(function(error) {
                     console.log(error);
                 })
             }
-            function buildAxis(xAxis, xTag, yAxis, yTag) {
+
+            function linspace(start, end, n) {
+                var out = [];
+                var delta = (end - start) / (n - 1);
+
+                var i = 0;
+                while(i < (n - 1)) {
+                    out.push(start + (i * delta));
+                    i++;
+                }
+
+                out.push(end);
+                return out;
+            }
+
+            function buildAxis(xAxis, xTag, yAxis, yTag, title) {
                 //Call the x axis in a group tag
                 svg.append("g")
                     .attr("class", "x axis")
@@ -544,7 +692,10 @@
 
                 //label x axis
                 svg.append("text")
-                    .attr("transform", "translate(" + width/2 + "," + (height + 50) +")")
+                    .attr("text-anchor", "middle")
+                    .attr("y", height+30)
+                    .attr("x", (width-margin.left-margin.right+175)/2)
+                    .attr("dy", "1em")
                     .text(xTag)
 
                 //Call the y axis in a group tag
@@ -559,6 +710,16 @@
                     .attr("x", 0-(height/2)-100)
                     .attr("dy", "1em")
                     .text(yTag);
+
+                //Append title
+                svg.append("text")
+                    .attr("class", "title")
+                    .attr("text-anchor", "middle")
+                    .attr("y", margin.top-140)
+                    .attr("x", (width-margin.left-margin.right)/2+75)
+                    .attr("dy", "1em")
+                    .text(title);
+
             }
 
             function setScene(sceneNum) {
@@ -609,4 +770,3 @@
         </script>
     </body>
 </html>
-
