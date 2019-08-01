@@ -136,6 +136,7 @@
         <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
         <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+        <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
     </head>
 
     <body>
@@ -175,16 +176,16 @@
             
         </div>
     <script>
-
+            var formatDecimal = d3.format(",.2f");
             // Set tooltips
             const tipMap = d3.tip()
                 .attr('class', 'd3-tip')
                 .offset([-10, 0])
                 .html(function(d) {
                     if (d.suicides == 0) {
-                        return `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong># of Suicides: No Data Found`;
+                        return `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong>Rate of Suicide: No Data Found`;
                     }else{
-                        return `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong># of Suicides: </strong><span class='details'>${d.suicides}</span>`;
+                        return `<strong>Country: </strong><span class='details'>${d.properties.name}<br></span><strong>Rate of Suicide: </strong><span class='details'>${formatDecimal(d.suicides)}</span>`;
                     }});
 
             const tipGender = d3.tip()
@@ -271,7 +272,6 @@
                         .projection(projection);
 
                     svg.call(tipMap);
-
 
                     // Data and color scale
                     var map = d3.map();
@@ -373,6 +373,56 @@
                         svg.append("g")
                             .attr("transform", "translate(-60, 275)")
                             .call(axisLeg);
+
+
+                        // Features of the annotation
+                        const annotations = [
+                        {
+                            note: {
+                                label: "Smaller countries may have much higher suicide rates, even though the population is much lower.",
+                                align: "left",  // try right or left
+                                wrap: 150  // try something smaller to see text split in several lines
+                            },
+                            x: 120, y: 120,
+                            dy: 50, dx: 100,
+                            type: d3.annotationCalloutCircle,
+                            subject: { radius: 40, radiusPadding: 10 }
+                        },
+                        {
+                            note: {
+                            },
+                            x: 350, y: 20,
+                            dy: 150, dx: -50,
+                            type: d3.annotationCalloutCircle,
+                            subject: { radius: 10, radiusPadding: 10 }
+                        },
+                        {
+                            note: {
+                                label: "Color Represents suicide rate - Darker colors correspond to higher rates",
+                            },
+                            x: 650, y: 60,
+                            dy: 250, dx: 0,
+                            type: d3.annotationCalloutCircle,
+                            subject: { radius: 5, radiusPadding: 10 }
+                        },
+                        {
+                            note: {
+                                label: "Some contries do not have any associated data.",
+                                wrap: 250  // try something smaller to see text split in several lines
+                            },
+                            x: 450, y: 610,
+                            dy: -50, dx: 0,
+                            type: d3.annotationCalloutCircle,
+                            subject: { radius: 5, radiusPadding: 10 }
+                        }]
+
+                        // Add annotation to the chart
+                        const makeAnnotations = d3.annotation()
+                            .annotations(annotations)
+
+                        svg.append("g")
+                            .call(makeAnnotations)
+
                     })
                     .catch(function(error) {
                         console.log(error);    
@@ -475,6 +525,37 @@
                         .attr("font-family", "sans-serif")
                         .attr("font-size", "11px")
                         .attr("fill", "black");
+
+                    // Features of the annotation
+                    const annotations = [
+                        {
+                            note: {
+                                label: "Select Different years to notice the overall trend. Rates for each group appear to decrease over time.",
+                                wrap: 150
+                            },
+                            x: 40, y: 0,
+                            dy: 200, dx: 0,
+                            subject: { radius: 10, radiusPadding: 5 }
+                        },
+                        {
+                            note: {
+                                label: "The ratio of suicide rates between age groups remains consistent throughout the years",
+                                wrap: 200
+                            },
+                            x: 250, y: 0,
+                            dy: 90, dx: 0,
+                            subject: { radius: 10, radiusPadding: 5 }
+                        }]
+
+                    // Add annotation to the chart
+                    const makeAnnotations = d3.annotation()
+                        .annotations(annotations)
+
+                
+                    svg.append("g")
+                        .call(makeAnnotations)
+
+
 
                     function update(input) {
 
@@ -663,6 +744,62 @@
                         .attr("x", rectWidth*3+50)
                         .attr("y", height+margin.bottom/2+15)
                         .text("- Female");
+
+                    // Features of the annotation
+                    const annotations = [
+                        {
+                            note: {
+                                label: "Global Suicide Rate increase",
+                            },
+                            x: 98, y: 308,
+                            dy: 30, dx: 20,
+                            type: d3.annotationCalloutCircle,
+                            subject: { radius: 20, radiusPadding: 0 }
+                        },
+                        {
+                            note: {
+
+                            },
+                            x: 98, y: 460,
+                            dy: -132, dx: 0,
+                            type: d3.annotationCalloutCircle,
+                            subject: { radius: 20, radiusPadding: 0 }
+                        },
+                        {
+                            note: {
+                                label: "Rates between male and female seem to trend similarly, but there is consistently a large disparity, with rates for males typically being much higher",
+                                wrap: 200,
+                                align: "middle"
+                            },
+                            x: 520, y: 10,
+                            dy: 150, dx: 0,
+                            subject: { radius: 20, radiusPadding: 0 }
+                        },
+                        {
+                            note: {
+                            },
+                            x: 520, y: 400,
+                            dy: -150, dx: 0,
+                            subject: { radius: 20, radiusPadding: 0 }
+                        },
+                        {
+                            note: {
+                                label: "Overall, rates seem to trend positively as time progresses. The data shows that rates might begin to decrease, but appropriate data is not provided to make a deductive assumption.",
+                                wrap: 200
+                            },
+                            x: 975, y: 122,
+                            dy: 70, dx: -30,
+                            type: d3.annotationCalloutCircle,
+                            subject: { radius: 10, radiusPadding: 0 }
+                        }]
+
+                    // Add annotation to the chart
+                    const makeAnnotations = d3.annotation()
+                        .annotations(annotations)
+
+                    svg.append("g")
+                        .call(makeAnnotations)
+
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -756,13 +893,13 @@
                         break;
                     case 2:
                         text.innerText = "This is text for scene 2";
-                        makeAgeScene();
+                        makeGenderScene();
                         break;
                     case 3:
                         next.disabled = true;
                         prev.disabled = false;
                         text.innerText = "This is text for scene 3";
-                        makeGenderScene();
+                        makeAgeScene();
                         break;
                 }
             }
