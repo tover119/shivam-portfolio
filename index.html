@@ -100,8 +100,12 @@
             background-color: #3d3d3d;
             height: 100%;
         }
-        p, #prompt, #description {
+        #prompt, #description {
             color: #ffff;
+        }
+        #title {
+            color: #ffff;
+            font-size: 35px;
         }
         .row.content {height: 1500px}
 
@@ -144,14 +148,15 @@
             <div class="row content">
                 <div class="col-sm-3 sidenav">
                     <br>
-                    <p>SUICIDE RATES BY COUNTRY AND AGE</p>
+                    <p id="title">World Suicide Rates by Country, Gender, and Age</p>
                     <br>
-                    <span id="prompt">The graphs shown on this page provide insight into world suicide statistics spanning several years. All numbers are normalized by population and show the amount of deaths per 100,000 people.
+                    <div id="prompt">The graphs shown on this page provide insight into world suicide statistics spanning several years. 
                         <br/><br/>Navigate through the scenes using the buttons above each chart to show different metrics. Date parameters and tooltips are available to provide further insight into the material displayed in each chart.
-                        <br/>______________________________________________________
-                    </span>
+                        <br/><br>_________________________________________________
+                    </div>
                     <br><br>
-                    <span id="description">This shows text for chart one</span>
+                    <div id="description">
+                    </div>
                 </div>
             
             <div class="col-sm-9">
@@ -226,7 +231,7 @@
 
 
             //make first scene
-            makeOverviewScene();
+            setScene(1);
 
             // gridlines in x axis function
             function make_x_gridlines() {		
@@ -531,18 +536,20 @@
                         {
                             note: {
                                 label: "Select Different years to notice the overall trend. Rates for each group appear to decrease over time.",
-                                wrap: 150
+                                wrap: 150,
+                                align: "middle"
                             },
-                            x: 40, y: 0,
+                            x: 125, y: 0,
                             dy: 200, dx: 0,
                             subject: { radius: 10, radiusPadding: 5 }
                         },
                         {
                             note: {
                                 label: "The ratio of suicide rates between age groups remains consistent throughout the years",
+                                align: "middle",
                                 wrap: 200
                             },
-                            x: 250, y: 0,
+                            x: 350, y: 0,
                             dy: 90, dx: 0,
                             subject: { radius: 10, radiusPadding: 5 }
                         }]
@@ -888,18 +895,30 @@
                     case 1:
                         prev.disabled = true;
                         next.disabled = false;
-                        text.innerText = "This is text for scene 1";
+                        text.innerText = "The current scene is a cholorpleth showing the world suicide rates for each country. \
+                        The numbers displayed are normalized by population, and show the rate per 100,000 people - The darker colors indicate higher rates. \
+                        Hover over each country to see the exact numbers for suicide rate. \
+                        Please note that some countries were not present in the dataset, and will show no data.\n\n \
+                        While rates seem relatively normal for most countries, there are a few outliers, like Russia, Greenland, and Lithuania.\
+                        We can also note that countries with a relatively small population can have a much higher rate of suicide than others.";
                         makeOverviewScene();
                         break;
                     case 2:
-                        text.innerText = "This is text for scene 2";
-                        makeGenderScene();
+                        text.innerText = "Here we see a bar chart depicting the normalized rate of suicide among individual age groups. Like the first dataset, this accounts for population, and the rates \
+                        are given by number of suicides per 100,000 people. At the bottom of the chart, there is a year selection tool available to investigate how these rates change throughout the years.\n\n\
+                        The bars trend similarly throughout the years with no major outliers, however, we can see that the rates seem to trend negatively as we move forward in time.";
+                        makeAgeScene();
                         break;
                     case 3:
                         next.disabled = true;
                         prev.disabled = false;
-                        text.innerText = "This is text for scene 3";
-                        makeAgeScene();
+
+                        text.innerText = "This scene shows the total world suicide rates for each gender over time. Unlike the first graph, these are total numbers, and are not normalized \
+                        by a spcific country's population (notice the difference of scale). This was taken from a sampled dataset distributed evenly across geographic \
+                        locations, and split evenly between genders. \n\nAt a glance, it is easy to see there is a large disparity between male and female suicide rates\
+                        , and we can notice that the world total seems to trend positively over the years. We notice a significant downward trend toward the end of the data\
+                        , but we lack further information to make an assumption.";
+                        makeGenderScene();
                         break;
                 }
             }
