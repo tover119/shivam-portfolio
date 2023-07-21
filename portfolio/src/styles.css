@@ -5,7 +5,7 @@ body {
     background-color: rgb(170, 215, 255);
 }
 
-p {
+h1 {
     position: absolute; /* taken out of the normal flow of the document */
     top: 50%; /* moved down by 50% of the screen height */
     transform: translateY(-50%); /* moved back up (Y axis) by half of its height to achieve the perfect center */
